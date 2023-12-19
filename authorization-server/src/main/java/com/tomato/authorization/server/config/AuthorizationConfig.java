@@ -69,9 +69,9 @@ public class AuthorizationConfig {
     }
 
     /**
-     * 生成密码编码器
+     * 配置密码解析器，使用BCrypt的方式对密码进行加密和验证
      *
-     * @return 返回 bcrypt 编码器
+     * @return BCryptPasswordEncoder
      */
     @Bean
     public PasswordEncoder passwordEncoder() {
