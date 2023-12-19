@@ -13,5 +13,22 @@
     <groupId>com.tomato</groupId>
     <artifactId>spring-authorization-server-example</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
 
+    <properties>
+        <java.version>17</java.version>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <mybatis.version>3.0.3</mybatis.version>
+
+        <webjars.version>5.2.3</webjars.version>
+    </properties>
+
+
+    <modules>
+        <module>authorization-resource</module>
+        <module>authorization-server</module>
+    </modules>
 </project>

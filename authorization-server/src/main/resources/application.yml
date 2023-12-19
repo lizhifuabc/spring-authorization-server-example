@@ -1,0 +1,30 @@
+server:
+  port: 9000
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/tomato_oauth?serverTimezone=Asia/Shanghai&userUnicode=true&characterEncoding=utf-8&ssl-mode=REQUIRED
+    username: ${MYSQL_USER:tomato}
+    password: ${MYSQL_PASSWORD:tomato}
+
+# 自定义授权服务器配置
+authorization:
+  security:
+    login-url: /oauthLogin
+# 自定义资源服务器配置
+resource:
+  security:
+    ignore-uri-list: assets/**, /webjars/**, /login,/oauthLogin
+    login-url: /login
+
+
+
+
+# 日志配置
+logging:
+  level:
+    root: INFO
+    org.springframework.web: INFO
+    org.springframework.security: INFO
+    org.springframework.security.oauth2: INFO
