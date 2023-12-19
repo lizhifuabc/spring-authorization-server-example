@@ -113,6 +113,19 @@ public class AuthorizationConfig {
     }
 
     /**
+     * 添加认证服务器配置，设置jwt签发者、默认端点请求地址等
+     *
+     * @return AuthorizationServerSettings
+     */
+    @Bean
+    public AuthorizationServerSettings authorizationServerSettings() {
+        return AuthorizationServerSettings.builder()
+                // 设置token签发地址(http(s)://{ip}:{port}/context-path, http(s)://domain.com/context-path)
+                .issuer(authorizationProperties.getIssuerUrl())
+                .build();
+    }
+
+    /**
      * 配置密码解析器，使用BCrypt的方式对密码进行加密和验证
      *
      * @return BCryptPasswordEncoder

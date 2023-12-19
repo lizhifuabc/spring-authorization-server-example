@@ -31,4 +31,10 @@ public class AuthorizationProperties {
      * 授权确认页面,前后端分离的项目为完整路径
      */
     private String consentPageUrl = "/oauth2/consent";
+
+    /**
+     * 当前认证服务访问的路径
+     * 设置token签发地址(http(s)://{ip}:{port}/context-path, http(s)://domain.com/context-path)
+     */
+    private String issuerUrl;
 }

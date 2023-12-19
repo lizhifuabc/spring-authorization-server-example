@@ -12,6 +12,7 @@ spring:
 authorization:
   security:
     login-url: /oauthLogin
+    issuer-url: http://127.0.0.1:9000
 # 自定义资源服务器配置
 resource:
   security:
