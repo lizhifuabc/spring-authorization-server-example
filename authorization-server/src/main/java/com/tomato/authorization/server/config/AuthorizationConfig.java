@@ -10,6 +10,7 @@ import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.MediaType;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
@@ -61,13 +62,19 @@ public class AuthorizationConfig {
         http.csrf(AbstractHttpConfigurer::disable);
         http.cors(AbstractHttpConfigurer::disable);
 
-        // 当未登录时访问认证端点时重定向至login页面,注意这里是指认证端点，不是资源端点，例如/oauth2/token
-        http.exceptionHandling((exceptions) -> exceptions
+        http
+                // 当未登录时访问认证端点时重定向至login页面,注意这里是指认证端点，不是资源端点，例如/oauth2/token
+                .exceptionHandling((exceptions) -> exceptions
                 .defaultAuthenticationEntryPointFor(
                         new LoginUrlAuthenticationEntryPoint(authorizationProperties.getLoginUrl()),
                         new MediaTypeRequestMatcher(MediaType.TEXT_HTML)
+                    )
                 )
-        );
+                // 添加 BearerTokenAuthenticationFilter，将认证服务当做一个资源服务，解析请求头中的token
+                // 指定令牌解析的方式，比如：从 Request Head 的 token 获取
+                // 默认在 Request Head 中以 Authorization: Bearer token 的格式提供
+                .oauth2ResourceServer((resourceServer) -> resourceServer
+                        .jwt(Customizer.withDefaults()));
 
         http.getConfigurer(OAuth2AuthorizationServerConfigurer.class)
                 // 自定义用户确认授权页面
