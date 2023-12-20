@@ -1,6 +1,6 @@
-package com.tomato.authorization.resource.config;
+package com.tomato.authorization.common.resource.config;
 
-import com.tomato.authorization.resource.properties.ResourceSecurityProperties;
+import com.tomato.authorization.common.resource.properties.ResourceSecurityProperties;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -50,7 +50,7 @@ public class ResourceConfig {
     @Bean
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests((authorize) -> authorize
-                // 放行静态资源和不需要认证的url
+                // 放行静态资源和不需要认证的url，被放行的接口上不能有权限注解，@PreAuthorize，否则无效
                 .requestMatchers(resourceSecurityProperties.getIgnoreUriList().toArray(new String[0])).permitAll()
                 // 其余都需要登录
                 .anyRequest().authenticated()

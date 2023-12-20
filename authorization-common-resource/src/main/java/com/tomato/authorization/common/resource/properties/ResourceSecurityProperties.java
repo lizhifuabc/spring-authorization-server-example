@@ -1,13 +1,12 @@
-package com.tomato.authorization.resource.properties;
+package com.tomato.authorization.common.resource.properties;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.tomato.authorization.resource.properties.ResourceSecurityProperties.PREFIX;
+import static com.tomato.authorization.common.resource.properties.ResourceSecurityProperties.PREFIX;
 
 /**
  * 自定义资源服务器配置

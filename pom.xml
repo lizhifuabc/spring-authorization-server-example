@@ -28,8 +28,9 @@
 
 
     <modules>
-        <module>authorization-resource</module>
+        <module>authorization-common-resource</module>
         <module>authorization-server</module>
         <module>authorization-client</module>
+        <module>authorization-resource</module>
     </modules>
 </project>
