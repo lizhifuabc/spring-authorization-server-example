@@ -77,11 +77,14 @@ public class AuthorizationConfig {
                         .jwt(Customizer.withDefaults()));
 
         http.getConfigurer(OAuth2AuthorizationServerConfigurer.class)
+                // 开启认证服务OIDC配置
+                .oidc(Customizer.withDefaults())
                 // 自定义用户确认授权页面
                 .authorizationEndpoint((authorizationEndpoint) -> {
                             authorizationEndpoint.consentPage(authorizationProperties.getConsentPageUrl());
                         }
-                );
+                )
+        ;
 
         return http.build();
     }
@@ -114,7 +117,7 @@ public class AuthorizationConfig {
 
     /**
      * 添加认证服务器配置，设置jwt签发者、默认端点请求地址等
-     *
+     * 用于配置Spring Authorization Server的一些全局设置，例如访问令牌的有效期、刷新令牌的策略和认证页面的URL等
      * @return AuthorizationServerSettings
      */
     @Bean
