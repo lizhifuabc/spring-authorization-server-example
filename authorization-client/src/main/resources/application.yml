@@ -1,0 +1,44 @@
+server:
+  port: 9001
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web: INFO
+    org.springframework.security: INFO
+    org.springframework.security.oauth2: INFO
+
+spring:
+  security:
+    oauth2:
+      client:
+        provider:
+          # 认证提供者,自定义名称
+          custom-issuer:
+            # Token签发地址(认证服务地址)
+            issuer-uri: http://127.0.0.1:9000
+            # 获取用户信息的地址，默认的/userinfo端点需要IdToken获取，可以在认证授权中心自定一个用户信息接口
+            user-info-uri: ${spring.security.oauth2.client.provider.custom-issuer.issuer-uri}/userinfo
+            user-name-attribute: sub
+        registration:
+          messaging-client-oidc:
+            # oauth认证提供者配置，和上边配置的认证提供者关联起来
+            provider: custom-issuer
+            # 客户端名称，自定义
+            client-name: message-client
+            # 客户端id，从认证服务申请的客户端id
+            client-id: messaging-client
+            # 客户端秘钥
+            client-secret: 123456
+            # 客户端认证方式
+            client-authentication-method: client_secret_basic
+            # 获取Token使用的授权流程
+            authorization-grant-type: authorization_code
+            # 回调地址，这里设置为Spring Security Client默认实现使用code换取token的接口
+            # 注意要和在认证服务中配置的回调地址一致
+            redirect-uri: http://192.168.18.14:9001/login/oauth2/code/messaging-client-oidc
+            scope:
+              - message.read
+              - message.write
+              - openid
+              - profile

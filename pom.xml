@@ -30,5 +30,6 @@
     <modules>
         <module>authorization-resource</module>
         <module>authorization-server</module>
+        <module>authorization-client</module>
     </modules>
 </project>

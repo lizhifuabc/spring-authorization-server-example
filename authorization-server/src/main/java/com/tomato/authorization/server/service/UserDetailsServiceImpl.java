@@ -26,7 +26,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         UserDetails user = User.withUsername("admin")
                 .password(passwordEncoder.encode("123456"))
                 .roles("admin", "normal")
-                .authorities("app", "web")
+                .authorities("message.read", "message.write")
                 .build();
         return user;
     }
