@@ -15,10 +15,13 @@
     <description>授权资源中心</description>
 
     <dependencies>
+        <!-- 用于添加OAuth2资源服务器的依赖，使得项目能够提供受保护的资源，并使用OAuth2协议进行访问控制。  -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
         </dependency>
+
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
