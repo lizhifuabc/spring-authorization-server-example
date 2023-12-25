@@ -9,7 +9,9 @@ import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
 import org.springframework.security.oauth2.core.oidc.OidcScopes;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
 import org.springframework.security.oauth2.server.authorization.settings.ClientSettings;
+import org.springframework.security.oauth2.server.authorization.settings.TokenSettings;
 
+import java.time.Duration;
 import java.util.UUID;
 
 /**
@@ -26,6 +28,14 @@ public class CustomRegisteredClientRepositoryTest {
     PasswordEncoder passwordEncoder;
     @Test
     public void test(){
+        // JWT（Json Web Token）的配置项：TTL、是否复用refrechToken等等
+        TokenSettings tokenSettings = TokenSettings.builder()
+                // 令牌存活时间：1年
+                .accessTokenTimeToLive(Duration.ofDays(365))
+                // 令牌不可以刷新
+                //.reuseRefreshTokens(false)
+                .build();
+
         RegisteredClient registeredClient = RegisteredClient.withId(UUID.randomUUID().toString())
                 // 客户端id
                 .clientId("messaging-client")
@@ -48,6 +58,8 @@ public class CustomRegisteredClientRepositoryTest {
                 .scope("message.write")
                 // 客户端设置，设置用户需要确认授权
                 .clientSettings(ClientSettings.builder().requireAuthorizationConsent(true).build())
+                // JWT（Json Web Token）配置项
+                .tokenSettings(tokenSettings)
                 .build();
         customRegisteredClientRepository.save(registeredClient);
     }
