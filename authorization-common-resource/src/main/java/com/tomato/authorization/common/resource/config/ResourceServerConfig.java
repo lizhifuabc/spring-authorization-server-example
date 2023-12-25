@@ -8,11 +8,11 @@ import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.util.UrlUtils;
 
 /**
  * 资源服务器配置
@@ -33,7 +33,7 @@ import org.springframework.security.web.util.UrlUtils;
 @RequiredArgsConstructor
 @EnableConfigurationProperties(ResourceSecurityProperties.class)
 @EnableMethodSecurity(jsr250Enabled = true, securedEnabled = true)
-public class ResourceConfig {
+public class ResourceServerConfig {
     private final ResourceSecurityProperties resourceSecurityProperties;
     @PostConstruct
     public void init() {
@@ -54,13 +54,9 @@ public class ResourceConfig {
                 .requestMatchers(resourceSecurityProperties.getIgnoreUriList().toArray(new String[0])).permitAll()
                 // 其余都需要登录
                 .anyRequest().authenticated()
-        ).formLogin(formLogin -> {
-            // 配置表单认证方式，它会使用表单提交用户名和密码进行认证。
-            formLogin.loginPage(resourceSecurityProperties.getLoginUrl());
-            if (UrlUtils.isAbsoluteUrl(resourceSecurityProperties.getLoginUrl())) {
-                // 绝对路径代表是前后端分离，登录成功和失败改为写回json，不重定向了
-
-            }
+        ).oauth2ResourceServer(oauth2->{
+            // 可在此处添加自定义解析设置
+            oauth2.jwt(Customizer.withDefaults());
         });
         return http.build();
     }

@@ -21,12 +21,6 @@ public class ResourceSecurityProperties {
     public static final String PREFIX = "resource.security";
 
     /**
-     * 登录页面地址,前后端分离的项目为完整路径
-     * 用于一般的应用程序认证
-     */
-    private String loginUrl = "/login";
-
-    /**
      * 不需要认证的路径
      */
     private List<String> ignoreUriList = new ArrayList<>();
