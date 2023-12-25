@@ -14,6 +14,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.UrlUtils;
+import org.springframework.web.filter.CorsFilter;
 
 /**
  * 资源服务器配置，授权服务器和资源服务器可以是同一个服务，也可以是不同的服务
@@ -35,7 +36,11 @@ import org.springframework.security.web.util.UrlUtils;
 @EnableConfigurationProperties(ResourceSecurityProperties.class)
 @EnableMethodSecurity(jsr250Enabled = true, securedEnabled = true)
 public class ResourceServerConfig {
+
     private final ResourceSecurityProperties resourceSecurityProperties;
+
+    private final CorsFilter corsFilter;
+
     @PostConstruct
     public void init() {
         log.info("资源服务器配置初始化：{}", resourceSecurityProperties);
@@ -50,6 +55,10 @@ public class ResourceServerConfig {
      */
     @Bean
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
+
+        // 添加跨域过滤器
+        http.addFilter(corsFilter);
+
         http.authorizeHttpRequests((authorize) -> authorize
                 // 放行静态资源和不需要认证的url，被放行的接口上不能有权限注解，@PreAuthorize，否则无效
                 .requestMatchers(resourceSecurityProperties.getIgnoreUriList().toArray(new String[0])).permitAll()

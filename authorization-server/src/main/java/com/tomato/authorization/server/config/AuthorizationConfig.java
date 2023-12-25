@@ -25,6 +25,7 @@ import org.springframework.security.oauth2.server.authorization.settings.Authori
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.util.matcher.MediaTypeRequestMatcher;
+import org.springframework.web.filter.CorsFilter;
 
 /**
  * 认证配置
@@ -38,6 +39,8 @@ import org.springframework.security.web.util.matcher.MediaTypeRequestMatcher;
 public class AuthorizationConfig {
 
     private final AuthorizationProperties authorizationProperties;
+
+    private final CorsFilter corsFilter;
 
     @PostConstruct
     public void init() {
@@ -59,9 +62,13 @@ public class AuthorizationConfig {
         // 配置默认的设置，忽略认证端点的csrf校验, 通过下面的代码进行禁用
         // 因为这段代码调用了 .anyRequest().authenticated()) 方法，重复配置，会报错：Can't configure mvcMatchers after anyRequest
          OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);
-        // 禁用 csrf 与 cors
+
+         // 禁用 csrf 与 cors
         http.csrf(AbstractHttpConfigurer::disable);
         http.cors(AbstractHttpConfigurer::disable);
+
+        // 添加跨域过滤器
+        http.addFilter(corsFilter);
 
         http
                 // 当未登录时访问认证端点时重定向至login页面,注意这里是指认证端点，不是资源端点，例如/oauth2/token

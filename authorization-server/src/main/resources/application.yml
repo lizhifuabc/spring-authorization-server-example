@@ -16,7 +16,7 @@ authorization:
 # 自定义资源服务器配置
 resource:
   security:
-    ignore-uri-list: assets/**, /webjars/**, /login,/oauthLogin
+    ignore-uri-list: /assets/**, /webjars/**, /login,/oauthLogin
     login-url: /login
 
 
@@ -27,5 +27,5 @@ logging:
   level:
     root: INFO
     org.springframework.web: INFO
-    org.springframework.security: INFO
-    org.springframework.security.oauth2: INFO
+    org.springframework.security: trace
+    org.springframework.security.oauth2: trace
