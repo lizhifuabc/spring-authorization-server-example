@@ -1,6 +1,7 @@
 package com.tomato.authorization.server.config;
 
 import com.tomato.authorization.server.properties.AuthorizationProperties;
+import com.tomato.authorization.server.util.SecurityUtils;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -74,7 +75,10 @@ public class AuthorizationConfig {
                 // 指定令牌解析的方式，比如：从 Request Head 的 token 获取
                 // 默认在 Request Head 中以 Authorization: Bearer token 的格式提供
                 .oauth2ResourceServer((resourceServer) -> resourceServer
-                        .jwt(Customizer.withDefaults()));
+                        .jwt(Customizer.withDefaults())
+                        // 添加未携带token和权限不足异常处理
+                        .accessDeniedHandler(SecurityUtils::exceptionHandler)
+                        .authenticationEntryPoint(SecurityUtils::exceptionHandler));
 
         http.getConfigurer(OAuth2AuthorizationServerConfigurer.class)
                 // 开启认证服务OIDC配置

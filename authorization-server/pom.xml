@@ -15,6 +15,17 @@
 
     <dependencies>
 
+        <!-- 用于添加OAuth2客户端的依赖，使得项目能够通过OAuth2协议与其他服务进行身份验证。  -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-oauth2-client</artifactId>
+        </dependency>
+        <!-- 用于添加OAuth2资源服务器的依赖，使得项目能够提供受保护的资源，并使用OAuth2协议进行访问控制。  -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+        </dependency>
+        <!-- 用于添加OAuth2授权服务器的依赖，使得项目能够提供授权服务，并使用OAuth2协议进行授权管理。   -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-oauth2-authorization-server</artifactId>
@@ -43,12 +54,6 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.tomato</groupId>
-            <artifactId>authorization-common-resource</artifactId>
-            <version>1.0-SNAPSHOT</version>
         </dependency>
 
         <!-- 解决 cdn无法访问 的问题:自定义登录页和确认页面 -->
