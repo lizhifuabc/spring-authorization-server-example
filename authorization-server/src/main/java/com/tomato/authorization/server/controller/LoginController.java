@@ -10,14 +10,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 
 /**
- * 认证服务器接口
+ * 认证服务器登录接口
  *
  * @author lizhifu
  * @since 2023/12/18
  */
 @Controller
 @RequiredArgsConstructor
-public class AuthorizationController {
+public class LoginController {
 
     /**
      * 登录接口，用于用户处理登录请求
