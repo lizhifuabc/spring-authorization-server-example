@@ -26,6 +26,6 @@ resource:
 logging:
   level:
     root: INFO
-    org.springframework.web: INFO
+    org.springframework.web: trace
     org.springframework.security: trace
     org.springframework.security.oauth2: trace

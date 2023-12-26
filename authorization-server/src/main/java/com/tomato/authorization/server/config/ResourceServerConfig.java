@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -30,7 +31,7 @@ import org.springframework.web.filter.CorsFilter;
  * @since 2023/12/19
  */
 @Slf4j
-@AutoConfiguration
+@Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
 @EnableConfigurationProperties(ResourceSecurityProperties.class)
