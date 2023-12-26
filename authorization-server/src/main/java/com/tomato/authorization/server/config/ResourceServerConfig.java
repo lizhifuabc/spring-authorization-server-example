@@ -47,7 +47,7 @@ public class ResourceServerConfig {
     }
 
     /**
-     * 配置认证相关的过滤器链(资源服务，客户端配置)
+     * 配置认证相关的过滤器链(资源服务，客户端配置),认证的Spring Security过滤器链
      *
      * @param http spring security核心配置类
      * @return 过滤器链

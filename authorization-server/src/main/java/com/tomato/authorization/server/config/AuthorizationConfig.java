@@ -48,7 +48,7 @@ public class AuthorizationConfig {
     }
 
     /**
-     * 配置端点的过滤器链
+     * 配置端点的过滤器链,协议端点的Spring Security过滤器链
      *
      * @param http spring security核心配置类
      * @return 过滤器链
@@ -74,6 +74,7 @@ public class AuthorizationConfig {
                 // 当未登录时访问认证端点时重定向至login页面,注意这里是指认证端点，不是资源端点，例如/oauth2/token
                 .exceptionHandling((exceptions) -> exceptions
                 .defaultAuthenticationEntryPointFor(
+                        // 当未登录时访问认证端点时重定向至登录页面，默认前往登录页的uri是/login
                         new LoginUrlAuthenticationEntryPoint(authorizationProperties.getLoginUrl()),
                         new MediaTypeRequestMatcher(MediaType.TEXT_HTML)
                     )
@@ -99,6 +100,7 @@ public class AuthorizationConfig {
 
         return http.build();
     }
+
 
     /**
      * 配置授权确认服务
